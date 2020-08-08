@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FinishMenu : MonoBehaviour{
+public class SceneChanger : MonoBehaviour
+{
+    [SerializeField] private string nextScene;
 
     void OnLevelWasLoaded(int level)
     {
@@ -12,9 +14,8 @@ public class FinishMenu : MonoBehaviour{
 
     }
 
-    public void FinishGame()
+    public void LoadNextScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 3);
+        SceneManager.LoadScene(nextScene);
     }
-
 }

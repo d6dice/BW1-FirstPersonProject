@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask; //Dit checked welke objecten het op moet letten
     public float death; //vallues op y axis om te bepalen hoe ver je valt voor respawn
 
+    public Canvas pauseScreen;
+    private bool paused = false;
+
     Vector3 velocity; //slaat de huidige 'velocity' op
 
     bool isGrounded; // Dit slaat op of het op de grond staat
@@ -41,11 +44,33 @@ public class PlayerMovement : MonoBehaviour
     {
         gotJetpack = false;
         deathOnImpact = false;
+
+        SetPause(paused);
+    }
+
+    public void SetPause(bool paused)
+    {
+        this.paused = paused;
+
+        Time.timeScale = paused ? 0 : 1;
+        pauseScreen.enabled = paused;
+        UnityEngine.Cursor.visible = paused;
+        UnityEngine.Cursor.lockState = paused ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            SetPause(!paused);
+        }
+
+        if (paused)
+        {
+            return;
+        }
+
         //Deze code zorgt er voor dat de velocity (gravity) word gereset nadat je land ingame
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //Maakt een sphere om te checken of je juist land ingame
 
@@ -94,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         controller.Move(move * speed * Time.deltaTime); //Dit zorgt voor de beweging van de player
-
 
         //Deze code zorgt voor gravity
 
@@ -150,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.tag == "Finish")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene("FinishScene");
         }
     }
 }
