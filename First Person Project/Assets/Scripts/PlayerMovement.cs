@@ -72,7 +72,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Deze code zorgt er voor dat de velocity (gravity) word gereset nadat je land ingame
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //Maakt een sphere om te checken of je juist land ingame
+
+        isGrounded = controller.isGrounded;
 
         if (isGrounded && velocity.y < 0)
         {
@@ -110,7 +111,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 jetpackFiring = true;
             }
-
         }
 
         if (Input.GetButtonUp("Jump"))
@@ -124,7 +124,6 @@ public class PlayerMovement : MonoBehaviour
 
         //"Time.deltaTime" zorgt er voor dat systemen met een lagere FPS (frames per second) voldoende worden geupdate;
         //Dus systeem met hogere framerate zal niet sneller zijn dan een systeem met lagere framerate en visa versa
-
 
         velocity.y += gravity * Time.deltaTime; //Dit voegt de velocity values toe ingame
 
@@ -154,14 +153,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && deathOnImpact)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene("RestartScene");
         }
 
     }
     //Jetpack script
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Jetpack");
+        if (other.tag == "Jetpack")
         {
             gotJetpack = true;
             jetpackFuel = jetpackFuel + jetpackFuelminimum;
