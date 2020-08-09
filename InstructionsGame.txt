@@ -1,0 +1,9 @@
+For the game:
+
+W, A, S, D to move
+
+'Spacebar' to jump, press twice for double jump
+
+Jetpack: press the jump button and at the double jump hold 'Spacebar'
+
+Press P to pause.

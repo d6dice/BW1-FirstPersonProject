@@ -174,6 +174,10 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "Finish")
         {
             SceneManager.LoadScene("FinishScene");
+        }       
+        if (other.tag == "DeathFloor")
+        {
+            SceneManager.LoadScene("RestartScene");
         }
     }
 }
